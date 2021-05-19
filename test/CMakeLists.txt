@@ -12,7 +12,7 @@ CPMAddPackage(
 
 # ---- Source files of test ----
 
-file(GLOB_RECURSE SOURCES 
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     "*.c" "*.C" "*.cc" "*.CC" "*.cpp" "*.CPP" "*.c++")
 
 # ---- Define test target ----

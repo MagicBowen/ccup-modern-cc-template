@@ -4,7 +4,7 @@ file(GLOB_RECURSE MAIN_FILE
     "main.cc" "main.cpp"
 )
 
-file(GLOB_RECURSE SOURCES
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     "*.c" "*.C" "*.cc" "*.CC" "*.cpp" "*.CPP" "*.c++"
 )
 
