@@ -179,7 +179,7 @@ function install() {
 
 function run() {
     start_exec "run"
-    ./$build/entry/${project_name}
+    ./$build/src/${project_name}_service
 }
 
 function doc() {
