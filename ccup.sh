@@ -98,6 +98,7 @@ Usage: ./ccup.sh [OPTIONS]
 Options:
     -e, Launch project in docker environment
     -u, Update dependent and generate makefile
+    -f, Format code
     -b, Build project
     -t, Execute testing
     -i, Install project
@@ -124,7 +125,7 @@ function env() {
 }
 
 function update() {
-    start_exec "update dependent and generate makefile of"
+    start_exec "update dependent and generate makefile"
 	command_exists cmake || {
 		error "cmake is not installed"
 		exit 1
@@ -136,6 +137,32 @@ function update() {
         exit 1
     fi
     success_exec "update"
+}
+
+function do_format() {
+    paths=$1
+    types=$2
+    for path in ${paths[*]}; do
+        for type in ${types[*]}; do
+            find $path -name "$type" -exec clang-format -style=file -i {} \;
+        done
+    done
+}
+
+function format() {
+    start_exec "format code"
+	command_exists clang-format || {
+		error "clang-format is not installed"
+		exit 1
+	} 
+    paths=("include" "src" "test")
+    types=("*.h" ".hpp" "*.c" "*.cc" "*.cpp")
+    do_format $paths $types
+    if [ $? -ne 0 ]; then
+        failed_exec "format"
+        exit 1
+    fi
+    success_exec "format"
 }
 
 function build() {
@@ -219,10 +246,11 @@ function clean_all() {
 }
 
 function parse_args() {
-    while getopts ':eubtirdcCh' OPTS; do
+    while getopts ':eufbtirdcCh' OPTS; do
         case $OPTS in
             e) env ;;
             u) update; ;;
+            f) format; ;;
             b) build; ;;
             t) test; ;;
             i) install; ;;
