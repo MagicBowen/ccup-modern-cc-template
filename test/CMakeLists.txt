@@ -2,14 +2,6 @@
 
 set(TEST_TARGET ${TARGET_LIB}_test)
 
-# ---- Test dependencies ----
-
-CPMAddPackage(
-    NAME cctest
-    GITHUB_REPOSITORY ccup/cctest
-    GIT_TAG master
-)
-
 # ---- Source files of test ----
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
@@ -21,9 +13,10 @@ add_executable(${TEST_TARGET} ${SOURCES})
 
 target_include_directories(${TEST_TARGET}
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-            ${PROJECT_SOURCE_DIR}/src)
+            ${PROJECT_SOURCE_DIR}/src
+            PRIVATE ${PROJECT_SOURCE_DIR}/deps )
 
-target_link_libraries(${TEST_TARGET} PRIVATE ${TARGET_LIB} cctest_main)
+target_link_libraries(${TEST_TARGET} PRIVATE ${TARGET_LIB})
 
 set_target_properties(${TEST_TARGET} PROPERTIES CXX_STANDARD 17)
 

@@ -1,13 +1,5 @@
-#include <cctest/cctest.h>
+#include "catch2/catch.hpp"
 
-FIXTURE(SampleTest) {
-	BEFORE {
-	}
-
-	AFTER{
-	}
-
-	TEST("should fail") {
-		ASSERT_TRUE(false);
-	}
-};
+SCENARIO("Sample Test") {
+    REQUIRE(false);
+}
