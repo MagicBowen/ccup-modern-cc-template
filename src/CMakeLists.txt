@@ -1,3 +1,12 @@
+# ---- Src dependencies ----
+set(CMAKE_CXX_STANDARD 17)
+
+# CPMAddPackage(
+#     NAME cub
+#     GITHUB_REPOSITORY ccup/cub
+#     GIT_TAG master
+# )
+
 # ---- Collect all src files except main.c ----
 
 file(GLOB_RECURSE MAIN_FILE 
@@ -20,6 +29,8 @@ else()
 endif()
 
 add_library(${TARGET_LIB} ${LIB_TYPE} ${SOURCES})
+
+# target_link_libraries(${TARGET_LIB} PUBLIC cub)
 
 target_include_directories(${TARGET_LIB}
     PUBLIC ${PROJECT_SOURCE_DIR}/include

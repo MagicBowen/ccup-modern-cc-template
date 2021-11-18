@@ -21,6 +21,20 @@ option(SHARED      "Generate shared library otherwise static" OFF)
 option(EXECUTABLE  "Generate executable target" ON)
 option(ENABLE_TEST "Build tests" OFF)
 option(ENABLE_TEST_COVERAGE "Enable test coverage" OFF)
+option(ENABLE_ASON "Enable AddressSanitizer" OFF)
+option(ENABLE_TSAN "Enable ThreadSanitizer" OFF)
+
+# ---- ASON & TSON config ----
+if(ENABLE_ASON)
+    message(STATUS "AddressSanitizer enabled")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address") 
+endif()
+
+if(ENABLE_TSAN)
+    message(STATUS "ThreadSanitizer enabled")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O1 -fsanitize=thread -fno-omit-frame-pointer -fPIC -fPIE")
+endif()
+
 
 # ---- Using CPM to add dependencies for project ----
 
