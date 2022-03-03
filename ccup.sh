@@ -183,7 +183,7 @@ function build() {
 
 function test() {
     start_exec "test"
-    find ./$build -perm -111 -type f -name "*_test"  -exec {} \;
+    find ./$build -perm -111 -type f -name "*_test*"  -exec {} \;
 
     if [ $? -ne 0 ]; then
         failed_exec "test"
