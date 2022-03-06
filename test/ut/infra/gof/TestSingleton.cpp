@@ -1,6 +1,5 @@
 #include "catch2/catch.hpp"
 #include "hiccup/infra/gof/Singleton.h"
-// #include <iostream>
 
 USING_HICCUP
 
