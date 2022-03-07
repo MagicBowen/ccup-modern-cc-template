@@ -12,6 +12,22 @@ template<typename ID, typename ENTITY>
 struct Repository {
     using EntityPtr = std::unique_ptr<ENTITY>;
 
+    Status add(const ID& id, EntityPtr ptr) {
+        if (find(id)) return HICCUP_FAILURE;
+
+        auto ret = entities.emplace(id, std::move(ptr));
+        return ret.second ? HICCUP_SUCCESS : HICCUP_FAILURE;
+    }
+
+    const ENTITY* find(const ID& id) const {
+        return const_cast<Repository*>(this)->find(id);
+    }
+
+    ENTITY* find(const ID& id) {
+        auto result = entities.find(id);
+        return (result == entities.end()) ? nullptr : result->second.get();
+    }
+
     std::size_t size() const {
         return entities.size();
     }

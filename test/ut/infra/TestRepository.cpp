@@ -38,4 +38,11 @@ namespace {
 TEST_CASE("Test Repository") {
     REQUIRE(REPO_OF(Foo).isEmpty());
     REQUIRE(REPO_OF(Foo).size() == 0);
+
+    SECTION("should add & del & find & clear entities") {
+        auto result = REPO_OF(Foo).add(1, std::make_unique<Foo>(1));
+        REQUIRE(!status_failed(result));
+        REQUIRE(!REPO_OF(Foo).isEmpty());
+        REQUIRE(REPO_OF(Foo).size() == 1);
+    }
 }
