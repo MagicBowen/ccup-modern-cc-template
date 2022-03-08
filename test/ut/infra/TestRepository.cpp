@@ -44,5 +44,28 @@ TEST_CASE("Test Repository") {
         REQUIRE(!status_failed(result));
         REQUIRE(!REPO_OF(Foo).isEmpty());
         REQUIRE(REPO_OF(Foo).size() == 1);
+
+        //SECTION("should not add the same entity") {
+        {
+            auto result = REPO_OF(Foo).add(1, std::make_unique<Foo>(1));
+            REQUIRE(status_failed(result));
+            REQUIRE(REPO_OF(Foo).size() == 1);
+        }
+
+        //SECTION("should add more different entities")
+        {
+            REPO_OF(Foo).add(2, std::make_unique<Foo>(2));
+            REQUIRE(REPO_OF(Foo).size() == 2);
+        }
+
+        // should delete enetity
+        {
+            REPO_OF(Foo).del(1);
+            REPO_OF(Foo).del(2);
+            REQUIRE(REPO_OF(Foo).isEmpty());
+            REQUIRE(REPO_OF(Foo).size() == 0);
+        }
     }
+
+
 }

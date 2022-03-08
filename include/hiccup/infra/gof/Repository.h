@@ -19,6 +19,10 @@ struct Repository {
         return ret.second ? HICCUP_SUCCESS : HICCUP_FAILURE;
     }
 
+    void del(const ID& id) {
+        entities.erase(id);
+    }
+
     const ENTITY* find(const ID& id) const {
         return const_cast<Repository*>(this)->find(id);
     }
