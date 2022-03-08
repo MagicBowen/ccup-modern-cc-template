@@ -61,6 +61,24 @@ TEST_CASE("Test Repository") {
             REQUIRE(REPO_OF(Foo).isEmpty());
             REQUIRE(REPO_OF(Foo).size() == 0);
         }
+
+        SECTION("should find existed entity") {
+            auto e = REPO_OF(Foo).find(1);
+            REQUIRE(e != nullptr);
+            REQUIRE(e->getValue() == 1);
+        }
+
+        SECTION("should not find unexistent entity") {
+            auto e = REPO_OF(Foo).find(2);
+            REQUIRE(e == nullptr);
+        }
+
+        SECTION("should find by const ussage") {
+            const FooRepo& constFooRepo = REPO_OF(Foo);
+            auto f = constFooRepo.find(1);
+            REQUIRE(f != nullptr);
+            // f->increase(); // should compile fail!
+        }
     }
 
     REPO_OF(Foo).clear();
