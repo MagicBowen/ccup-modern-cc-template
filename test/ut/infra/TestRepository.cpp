@@ -79,6 +79,16 @@ TEST_CASE("Test Repository") {
             REQUIRE(f != nullptr);
             // f->increase(); // should compile fail!
         }
+
+        SECTION("shoud find by value") {
+            int id = 1;
+            auto pred = [id](const auto& foo) {
+                return foo.getValue() == id;
+            };
+            auto f = REPO_OF(Foo).findBy(pred);
+            REQUIRE(f != nullptr);
+            REQUIRE(f->getValue() == 1);
+        }
     }
 
     REPO_OF(Foo).clear();

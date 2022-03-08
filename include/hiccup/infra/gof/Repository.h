@@ -32,6 +32,19 @@ struct Repository {
         return (result == entities.end()) ? nullptr : result->second.get();
     }
 
+    template<typename PRED>
+    const ENTITY* findBy(PRED && pred) const {
+        return const_cast<Repository*>(this)->findBy(std::forward<PRED>(pred));
+    }
+
+    template<typename PRED>
+    ENTITY* findBy(PRED && pred) {
+        auto result = std::find_if(entities.begin(), entities.end(), [pred=std::forward<PRED>(pred)](const auto& item) {
+            return pred(*item.second.get());
+        });
+        return (result == entities.end()) ? nullptr : result->second.get();
+    }
+
     std::size_t size() const {
         return entities.size();
     }
