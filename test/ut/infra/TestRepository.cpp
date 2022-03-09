@@ -105,6 +105,13 @@ TEST_CASE("Test Repository") {
             REQUIRE(f != nullptr);
             REQUIRE(f->getValue() == 1);
         }
+
+        SECTION("should not find by nonexistent value") {
+            auto f = REPO_OF(Foo).findBy([](const auto& foo){
+                return foo.getValue() == 2;
+            });
+            REQUIRE(f == nullptr);
+        }
     }
 
     REPO_OF(Foo).clear();
