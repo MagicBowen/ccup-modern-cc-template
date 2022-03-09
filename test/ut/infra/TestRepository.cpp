@@ -32,6 +32,15 @@ namespace {
     DEF_REPO_OF(FooId, Foo) {
 
     };
+
+    struct FooValueEqualPred {
+        FooValueEqualPred(int v) : value{v} {}
+        bool operator()(const Foo& foo) const {
+            return foo.getValue() == value;
+        }
+    private:
+        int value;
+    };
     
 }
 
@@ -85,6 +94,13 @@ TEST_CASE("Test Repository") {
             auto pred = [id](const auto& foo) {
                 return foo.getValue() == id;
             };
+            auto f = REPO_OF(Foo).findBy(pred);
+            REQUIRE(f != nullptr);
+            REQUIRE(f->getValue() == 1);
+        }
+
+        SECTION("should find by value functor") {
+            FooValueEqualPred pred{1};
             auto f = REPO_OF(Foo).findBy(pred);
             REQUIRE(f != nullptr);
             REQUIRE(f->getValue() == 1);
